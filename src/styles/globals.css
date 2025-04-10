@@ -1,0 +1,65 @@
+/* 전역 스타일 */
+body {
+  background-color: #f8f9fa;
+}
+
+/* 모달 스타일 */
+.modal {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* 콘솔 스타일 */
+.console {
+  font-family: monospace;
+  background-color: #1e1e1e;
+  color: #fff;
+  border-radius: 4px;
+}
+
+.console-line {
+  padding: 2px 0;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/* 시각화 패널 스타일 */
+.visualization {
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+}
+
+/* 명령어 입력 스타일 */
+.command-input {
+  margin-top: 1rem;
+}
+
+/* 게시판 스타일 */
+.board-page .list-group-item {
+  transition: background-color 0.2s;
+}
+
+.board-page .list-group-item:hover {
+  background-color: #f8f9fa;
+}
+
+/* 질문 페이지 스타일 */
+.questions-page .list-group-item {
+  transition: background-color 0.2s;
+}
+
+.questions-page .list-group-item:hover {
+  background-color: #f8f9fa;
+}
+
+/* 설정 페이지 스타일 */
+.settings-page .list-group-item {
+  cursor: pointer;
+}
+
+/* 반응형 스타일 */
+@media (max-width: 768px) {
+  .row > [class*='col-'] {
+    margin-bottom: 1rem;
+  }
+} 
