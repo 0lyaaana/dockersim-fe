@@ -1,10 +1,13 @@
+import React from 'react'
+
 interface ConsoleProps {
   output: string[]
+  className?: string
 }
 
-const Console = ({ output }: ConsoleProps) => {
+const Console: React.FC<ConsoleProps> = ({ output, className = '' }) => {
   return (
-    <div className="console bg-dark text-light p-3 mb-3" style={{ height: '400px', overflowY: 'auto' }}>
+    <div className={`console ${className}`} style={{ height: '400px', overflowY: 'auto' }}>
       {output.map((line, index) => (
         <div key={index} className="console-line">
           {line}

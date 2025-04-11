@@ -1,0 +1,71 @@
+.resource-chart {
+    height: 200px;
+    position: relative;
+    padding: 1rem 0;
+    margin-top: 1rem;
+}
+
+.chart-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    height: 150px;
+    position: relative;
+    z-index: 1;
+}
+
+.chart-bar-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 40px;
+}
+
+.chart-bar {
+    width: 100%;
+    background-color: #3b82f6;
+    border-radius: 4px;
+    transition: height 0.3s ease;
+}
+
+.chart-bar.memory {
+    background-color: #10b981;
+}
+
+.chart-legend {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: #6b7280;
+    font-size: 0.75rem;
+    padding-right: 1rem;
+}
+
+.chart-legend::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+        to bottom,
+        transparent 0%,
+        transparent calc(100% - 1px),
+        #2d3139 calc(100% - 1px),
+        #2d3139 100%
+    );
+    background-size: 100% 50%;
+    opacity: 0.5;
+}
+
+small {
+    color: #6b7280;
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+} 

@@ -216,9 +216,22 @@ const LevelModal = ({ onClose, onSelectLevel }: LevelModalProps) => {
                                     복사
                                   </button>
                                 </div>
+                                <div>
+                                </div>
                                 <small className="text-muted">{cmd.explanation}</small>
                               </div>
                             ))}
+                            <div className="d-flex justify-content-center align-items-center">
+                              <button 
+                                className="my-3 btn btn-sm btn-outline-primary"
+                                onClick={() => {
+                                  onSelectLevel(selectedLevel.id, selectedStep.id);
+                                  onClose();
+                                }}
+                              >
+                                확인
+                              </button>
+                            </div>
                           </div>
                         </div>
                       </div>
