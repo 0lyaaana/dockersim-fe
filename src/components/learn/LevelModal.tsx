@@ -1,4 +1,6 @@
-import { useState } from 'react'
+'use client'
+
+import React, { useState } from 'react'
 
 interface Step {
   id: number
@@ -16,6 +18,12 @@ interface Level {
   title: string
   description: string
   steps: Step[]
+}
+
+interface LevelModalProps {
+  isOpen: boolean
+  onClose: () => void
+  onSelectLevel: (level: number, step: number) => void
 }
 
 const LEVELS: Level[] = [
@@ -120,17 +128,14 @@ const LEVELS: Level[] = [
   }
 ]
 
-interface LevelModalProps {
-  onClose: () => void
-  onSelectLevel: (level: number, step: number) => void
-}
-
-const LevelModal = ({ onClose, onSelectLevel }: LevelModalProps) => {
+export default function LevelModal({ isOpen, onClose, onSelectLevel }: LevelModalProps) {
   const [selectedLevel, setSelectedLevel] = useState<Level | null>(null)
   const [selectedStep, setSelectedStep] = useState<Step | null>(null)
 
+  if (!isOpen) return null
+
   return (
-    <div className="modal d-block" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+    <div className="modal show d-block" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
       <div className="modal-dialog modal-xl">
         <div className="modal-content">
           <div className="modal-header">
@@ -146,7 +151,7 @@ const LevelModal = ({ onClose, onSelectLevel }: LevelModalProps) => {
               <div className="col-md-4 border-end">
                 <div className="list-group">
                   {LEVELS.map(level => (
-                    <button
+                    <button 
                       key={level.id}
                       className={`list-group-item list-group-item-action ${
                         selectedLevel?.id === level.id ? 'active' : ''
@@ -216,8 +221,6 @@ const LevelModal = ({ onClose, onSelectLevel }: LevelModalProps) => {
                                     복사
                                   </button>
                                 </div>
-                                <div>
-                                </div>
                                 <small className="text-muted">{cmd.explanation}</small>
                               </div>
                             ))}
@@ -249,6 +252,4 @@ const LevelModal = ({ onClose, onSelectLevel }: LevelModalProps) => {
       </div>
     </div>
   )
-}
-
-export default LevelModal 
+} 
