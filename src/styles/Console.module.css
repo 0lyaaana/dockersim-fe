@@ -1,0 +1,7 @@
+.console {
+    height: 400px;
+    overflow-y: auto;
+    border-radius: 5px;
+    font-family: monospace;
+  }
+  
