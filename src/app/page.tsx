@@ -1,36 +1,57 @@
 'use client';
 
-import Console from '@/components/console/Console';
-import BottomBar from '@/components/BottomBar';
+import React from 'react';
+import Header from '@/components/common/Header';
+import Terminal from '@/components/terminal/Terminal';
+import LevelSelectModal from '@/components/learn/LevelSelectModal';
+import ContainerListModal from '@/components/learn/ContainerListModal';
+import CommandDictionaryModal from '@/components/learn/CommandDictionaryModal';
+import styles from './page.module.css';
 
 export default function Home() {
+  const [isLevelModalOpen, setIsLevelModalOpen] = React.useState(false);
+  const [isContainerListModalOpen, setIsContainerListModalOpen] = React.useState(false);
+  const [isCommandDictModalOpen, setIsCommandDictModalOpen] = React.useState(false);
+
   return (
-    <div className="container-fluid">
-      <div className="row">
-        {/* 왼쪽 콘솔 영역 */}
-        <div className="col-md-6">
-          <div className="mt-4">
-            <Console />
-          </div>
+    <div className={styles.container}>
+      <Header />
+      <main className={styles.main}>
+        <div className={styles.buttonContainer}>
+          <button 
+            className={styles.actionButton}
+            onClick={() => setIsLevelModalOpen(true)}
+          >
+            레벨 선택
+          </button>
+          <button 
+            className={styles.actionButton}
+            onClick={() => setIsContainerListModalOpen(true)}
+          >
+            컨테이너 리스트
+          </button>
+          <button 
+            className={styles.actionButton}
+            onClick={() => setIsCommandDictModalOpen(true)}
+          >
+            명령어 사전
+          </button>
         </div>
-        
-        {/* 오른쪽 시각화 영역 */}
-        <div className="col-md-6">
-          <div className="mt-4">
-            <div className="visualization-area">
-              {/* 도커 시각화 컴포넌트가 여기에 들어갈 예정 */}
-            </div>
-          </div>
-        </div>
+        <Terminal />
+      </main>
 
-{/* {하단 고정 바바} */}
-        <div>
-      <h1>Hello, world!</h1>
-      {/* 다른 내용들 */}
-      <BottomBar />
-    </div>
-
-      </div>
+      <LevelSelectModal 
+        isOpen={isLevelModalOpen}
+        onClose={() => setIsLevelModalOpen(false)}
+      />
+      <ContainerListModal 
+        isOpen={isContainerListModalOpen}
+        onClose={() => setIsContainerListModalOpen(false)}
+      />
+      <CommandDictionaryModal 
+        isOpen={isCommandDictModalOpen}
+        onClose={() => setIsCommandDictModalOpen(false)}
+      />
     </div>
   );
 }

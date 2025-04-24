@@ -1,90 +1,276 @@
 .terminalContainer {
-  width: 100%;
-  height: 100vh;
-  background-color: #1e1e1e;
-  color: #fff;
-  font-family: 'Consolas', monospace;
-  position: relative;
-  overflow: hidden;
-}
-
-.splitView {
   display: flex;
-  height: 100%;
-  position: relative;
-  overflow: hidden;
+  gap: 2rem;
+  height: calc(100vh - 48px);
+  padding: 1rem;
+  background-color: #f8f9fa;
 }
 
 .terminalSection {
-  flex: 1;
+  flex: 0 0 30%;
   display: flex;
   flex-direction: column;
-  padding: 1rem;
   background-color: #1e1e1e;
+  border: 1px solid #333;
+  border-radius: 8px;
   overflow: hidden;
-  position: relative;
-  z-index: 1;
+  height: 100%;
 }
 
-.visualSection {
-  flex: 0 0 600px;
-  background-color: #ffffff;
-  position: relative;
-  z-index: 2;
-  border-left: 1px solid #333;
+.browserSection {
+  flex: 0 0 50%;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-}
-
-.containerVisualizer {
-  flex: 1;
-  overflow-y: auto;
-  padding: 1.5rem;
-  background-color: #ffffff;
+  height: 100%;
 }
 
 .output {
   flex: 1;
+  padding: 1rem;
+  background-color: #1e1e1e;
+  color: #fff;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
   overflow-y: auto;
-  padding: 0.5rem;
-  margin-bottom: 1rem;
+  line-height: 1.5;
 }
 
 .inputForm {
+  border-top: 1px solid #333;
+  padding: 0.75rem 1rem;
+  background-color: #1e1e1e;
+}
+
+.commandLine {
   display: flex;
   align-items: center;
   background-color: #252526;
-  padding: 0.5rem;
+  padding: 8px 12px;
   border-radius: 4px;
 }
 
 .prompt {
   color: #569cd6;
-  margin-right: 0.5rem;
+  margin-right: 8px;
   font-weight: bold;
 }
 
 .input {
   flex: 1;
-  background: none;
   border: none;
-  color: #fff;
-  font-family: inherit;
-  font-size: 1rem;
   outline: none;
+  background: transparent;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  color: #fff;
 }
 
 .input::placeholder {
   color: #666;
 }
 
-.commandLine {
-  padding: 0.25rem 0;
-  color: #dcdcdc;
+/* Chrome 스타일 탭 */
+.chromeToolbar {
+  background: #f1f3f5;
+  padding: 8px 4px 0;
+  display: flex;
+  align-items: flex-end;
+  min-height: 40px;
+  border-bottom: 1px solid #dee2e6;
 }
 
-/* 스크롤바 스타일링 */
+.networkTabs {
+  display: flex;
+  align-items: flex-end;
+  height: 100%;
+  gap: 0;
+}
+
+.chromeTab {
+  height: 32px;
+  padding: 0 10px 0 16px;
+  background: #e9ecef;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 140px;
+  max-width: 180px;
+  position: relative;
+  cursor: pointer;
+  font-size: 12px;
+  color: #495057;
+  border-radius: 8px 8px 0 0;
+  margin-right: -10px;
+  transition: all 0.15s;
+}
+
+.chromeTab::before,
+.chromeTab::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  bottom: 0;
+  background: transparent;
+}
+
+.chromeTab::before {
+  left: -8px;
+  border-bottom-right-radius: 8px;
+  box-shadow: 4px 4px 0 4px #e9ecef;
+}
+
+.chromeTab::after {
+  right: -8px;
+  border-bottom-left-radius: 8px;
+  box-shadow: -4px 4px 0 4px #e9ecef;
+}
+
+.chromeTab:hover {
+  background: #f1f3f5;
+}
+
+.chromeTab:hover::before {
+  box-shadow: 4px 4px 0 4px #f1f3f5;
+}
+
+.chromeTab:hover::after {
+  box-shadow: -4px 4px 0 4px #f1f3f5;
+}
+
+.chromeTab.activeTab {
+  background: white;
+  z-index: 2;
+}
+
+.chromeTab.activeTab::before {
+  box-shadow: 4px 4px 0 4px white;
+}
+
+.chromeTab.activeTab::after {
+  box-shadow: -4px 4px 0 4px white;
+}
+
+.tabIcon {
+  font-size: 16px;
+  opacity: 0.7;
+}
+
+.tabTitle {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tabClose {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: none;
+  background: none;
+  color: #868e96;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0.8;
+  margin-right: -4px;
+}
+
+.tabClose:hover {
+  background: #dee2e6;
+  color: #495057;
+}
+
+.networkContent {
+  flex: 1;
+  background: white;
+  position: relative;
+  overflow-y: auto;
+}
+
+.networkContent.active {
+  display: block;
+}
+
+.networkContent:not(.active) {
+  display: none;
+}
+
+.networkContainer {
+  padding: 1rem;
+}
+
+.containersGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.containerCard {
+  background: white;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.containerCard h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1rem;
+  color: #495057;
+}
+
+.portsList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.port {
+  background: #e7f5ff;
+  color: #1c7ed6;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  min-height: 300px;
+  color: #868e96;
+  text-align: center;
+  padding: 2rem;
+}
+
+.emptyIcon {
+  font-size: 48px;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.emptyState p {
+  margin: 0 0 0.5rem;
+  font-size: 0.9rem;
+  color: #495057;
+}
+
+.emptyState small {
+  font-size: 0.8rem;
+  color: #adb5bd;
+}
+
+/* 스크롤바 스타일 */
 .output::-webkit-scrollbar {
   width: 8px;
 }
@@ -102,100 +288,86 @@
   background: #4f4f4f;
 }
 
-.containerList {
+/* 업로드 바 */
+.uploadBar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+  background: white;
+  border-top: 1px solid #dee2e6;
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  padding: 0 1rem;
+  justify-content: space-between;
+  z-index: 1000;
+}
+
+.uploadSection {
+  display: flex;
+  align-items: center;
   gap: 1rem;
 }
 
-.emptyState {
-  text-align: center;
-  padding: 2rem;
-  color: #666;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.hint {
-  font-size: 0.875rem;
-  color: #999;
-  margin-top: 0.5rem;
-}
-
-.containerCard {
-  background-color: #f8f9fa;
-  border: 2px solid #228be6;
-  border-radius: 8px;
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: all 0.2s ease;
-}
-
-.containerCard:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  border-color: #339af0;
-}
-
-.containerIcon {
-  font-size: 2rem;
-  text-align: center;
-}
-
-.containerName {
-  font-size: 1.25rem;
-  font-weight: bold;
-  color: #1c7ed6;
-  text-align: center;
-}
-
-.containerImage {
-  font-size: 0.875rem;
-  color: #495057;
-  font-family: monospace;
-  background-color: #f1f3f5;
-  padding: 0.25rem 0.5rem;
+.uploadButton {
+  padding: 6px 12px;
+  background: #228be6;
+  color: white;
+  border: none;
   border-radius: 4px;
-  text-align: center;
-  word-break: break-all;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
 }
 
-.containerStatus {
-  font-size: 0.875rem;
-  color: #2b8a3e;
-  background-color: #d3f9d8;
-  padding: 0.25rem 0.75rem;
-  border-radius: 12px;
-  font-weight: 500;
-  text-align: center;
-  align-self: center;
+.uploadButton:hover {
+  background: #1c7ed6;
 }
 
-.containerPorts {
-  margin-top: 0.5rem;
-  padding-top: 0.5rem;
-  border-top: 1px solid #dee2e6;
-}
-
-.portsTitle {
-  font-size: 0.875rem;
-  color: #868e96;
-  margin-bottom: 0.5rem;
-}
-
-.portMapping {
-  font-size: 0.875rem;
+.viewImagesButton {
+  padding: 6px 12px;
+  background: #f8f9fa;
   color: #495057;
-  font-family: monospace;
-  background-color: #f1f3f5;
-  padding: 0.25rem 0.5rem;
+  border: 1px solid #dee2e6;
   border-radius: 4px;
-  margin-bottom: 0.25rem;
-  word-break: break-all;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.viewImagesButton:hover {
+  background: #e9ecef;
+  border-color: #ced4da;
+}
+
+/* 반응형 스타일 */
+@media (max-width: 1200px) {
+  .terminalSection {
+    flex: 0 0 35%;
+  }
+  
+  .browserSection {
+    flex: 0 0 65%;
+  }
+}
+
+@media (max-width: 768px) {
+  .terminalContainer {
+    flex-direction: column;
+  }
+  
+  .terminalSection,
+  .browserSection {
+    flex: none;
+    width: 100%;
+  }
+  
+  .terminalSection {
+    height: 40vh;
+  }
+  
+  .browserSection {
+    height: calc(60vh - 48px);
+  }
 }
