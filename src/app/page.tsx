@@ -16,29 +16,6 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <Header />
-      <main className={styles.main}>
-        <div className={styles.buttonContainer}>
-          <button 
-            className={styles.actionButton}
-            onClick={() => setIsLevelModalOpen(true)}
-          >
-            레벨 선택
-          </button>
-          <button 
-            className={styles.actionButton}
-            onClick={() => setIsContainerListModalOpen(true)}
-          >
-            컨테이너 리스트
-          </button>
-          <button 
-            className={styles.actionButton}
-            onClick={() => setIsCommandDictModalOpen(true)}
-          >
-            명령어 사전
-          </button>
-        </div>
-        <Terminal />
-      </main>
 
       <LevelSelectModal 
         isOpen={isLevelModalOpen}
@@ -52,6 +29,10 @@ export default function Home() {
         isOpen={isCommandDictModalOpen}
         onClose={() => setIsCommandDictModalOpen(false)}
       />
+
+      <main className={styles.main}>
+        <Terminal />
+      </main>
     </div>
   );
 }

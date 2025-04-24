@@ -1,9 +1,18 @@
-interface ParsedContainer {
+interface ParsedPort {
+  host: string;
+  container: string;
+}
+
+interface ParsedVolume {
   name: string;
+  mountPath: string;
+}
+
+interface ParsedContainer {
+  name?: string;
   image: string;
-  ports: { host: number; container: number }[];
-  status: string;
-  created: string;
+  ports: ParsedPort[];
+  volumes: ParsedVolume[];
   networkId?: string;
 }
 
@@ -40,63 +49,66 @@ export function parseDockerNetworkCommand(command: string): ParsedNetwork | null
   }
 }
 
-export function parseDockerRunCommand(command: string, activeNetworkId?: string): ParsedContainer | null {
-  try {
-    const parts = command.trim().split(/\s+/);
-    console.log('Run command parts:', parts);
+export function parseDockerRunCommand(command: string): ParsedContainer | null {
+  const parts = command.split(' ').filter(part => part !== '\\');
+  if (parts[0] !== 'docker' || parts[1] !== 'run') return null;
 
-    if (parts[0] !== 'docker' || parts[1] !== 'run') {
-      return null;
+  const result: ParsedContainer = {
+    image: '',
+    ports: [],
+    volumes: []
+  };
+
+  let i = 2;
+  while (i < parts.length) {
+    if (parts[i] === '-d' || parts[i] === '--detach') {
+      i++;
+      continue;
     }
 
-    let name = '';
-    let image = '';
-    let networkId = activeNetworkId;
-    const ports: { host: number; container: number }[] = [];
+    if (parts[i] === '--name' && parts[i + 1]) {
+      result.name = parts[i + 1];
+      i += 2;
+      continue;
+    }
 
-    for (let i = 2; i < parts.length; i++) {
-      const part = parts[i];
-      console.log('Processing part:', part);
-
-      if (part === '--name' && i + 1 < parts.length) {
-        name = parts[++i];
-        console.log('Found name:', name);
-      } else if (part === '-p' || part === '--publish') {
-        if (i + 1 < parts.length) {
-          const portMapping = parts[++i];
-          const [host, container] = portMapping.split(':').map(Number);
-          if (!isNaN(host) && !isNaN(container)) {
-            ports.push({ host, container });
-            console.log('Added port mapping:', { host, container });
-          }
-        }
-      } else if ((part === '--network' || part === '--net') && i + 1 < parts.length) {
-        networkId = parts[++i];
-        console.log('Found network:', networkId);
-      } else if (!part.startsWith('-') && !image) {
-        image = part;
-        console.log('Found image:', image);
+    if ((parts[i] === '-p' || parts[i] === '--publish') && parts[i + 1]) {
+      const portMapping = parts[i + 1].split(':');
+      if (portMapping.length === 2) {
+        result.ports.push({
+          host: portMapping[0],
+          container: portMapping[1]
+        });
       }
+      i += 2;
+      continue;
     }
 
-    if (!name || !image) {
-      console.log('Missing required fields:', { name, image });
-      return null;
+    if ((parts[i] === '-v' || parts[i] === '--volume') && parts[i + 1]) {
+      const volumeMapping = parts[i + 1].split(':');
+      if (volumeMapping.length === 2) {
+        result.volumes.push({
+          name: volumeMapping[0],
+          mountPath: volumeMapping[1]
+        });
+      }
+      i += 2;
+      continue;
     }
 
-    const container = {
-      name,
-      image,
-      ports,
-      status: 'running',
-      created: new Date().toISOString(),
-      networkId
-    };
+    if (parts[i] === '--network' && parts[i + 1]) {
+      result.networkId = parts[i + 1];
+      i += 2;
+      continue;
+    }
 
-    console.log('Created container object:', container);
-    return container;
-  } catch (error) {
-    console.error('Error parsing run command:', error);
-    return null;
+    if (!parts[i].startsWith('-')) {
+      result.image = parts[i];
+      break;
+    }
+
+    i++;
   }
+
+  return result.image ? result : null;
 } 
